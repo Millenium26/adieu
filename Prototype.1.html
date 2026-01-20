@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADIEU 26 | Farewell Invitation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+--bg-deep: #050505;
+--gold: #d4af37;
+--silver: #e0e0e0;
+--purple: #9d50bb;
+--electric: #6e48aa;
+--text-glow: rgba(212, 175, 55, 0.5);
+--transition-speed: 1.2s;
+}
+* {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body, html {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: var(--bg-deep);
+        font-family: 'Montserrat', sans-serif;
+        color: white;
+        cursor: pointer;
+    }
+
+    #bg-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.4) 100%);
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    .container {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .slide {
+        position: absolute;
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+        transition: all var(--transition-speed) cubic-bezier(0.23, 1, 0.32, 1);
+        pointer-events: none;
+        width: 90%;
+        max-width: 1000px;
+        visibility: hidden;
+    }
+
+    .slide.active {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        pointer-events: auto;
+        visibility: visible;
+    }
+
+    .slide.prev {
+        opacity: 0;
+        transform: scale(1.1) translateY(-20px);
+    }
+
+    h1 {
+        font-family: 'Cinzel', serif;
+        font-size: clamp(2.5rem, 8vw, 6rem);
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+        background: linear-gradient(to bottom, #fff 20%, var(--gold) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 0 15px var(--text-glow));
+    }
+
+    .accent-text {
+        font-family: 'Cinzel', serif;
+        font-size: clamp(1.5rem, 4vw, 3rem);
+        color: var(--silver);
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        margin-bottom: 2rem;
+        display: block;
+    }
+
+    .sub-text {
+        font-size: clamp(1rem, 2vw, 1.5rem);
+        font-weight: 200;
+        letter-spacing: 0.5em;
+        color: rgba(255, 255, 255, 0.7);
+        text-transform: uppercase;
+    }
+
+    .neon-purple {
+        background: linear-gradient(45deg, var(--purple), var(--electric));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 0 10px var(--purple));
+    }
+
+    .navigation {
+        position: fixed;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        gap: 15px;
+    }
+
+    .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        transition: 0.3s;
+    }
+
+    .dot.active {
+        background: var(--gold);
+        box-shadow: 0 0 10px var(--gold);
+        transform: scale(1.5);
+    }
+
+    .hint {
+        position: fixed;
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.7rem;
+        letter-spacing: 0.3em;
+        color: rgba(255, 255, 255, 0.3);
+        text-transform: uppercase;
+        animation: pulse 2s infinite;
+        z-index: 10;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 0.7; }
+    }
+
+    .glimmer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+        transform: translateX(-100%);
+        animation: shimmer 5s infinite;
+        pointer-events: none;
+    }
+
+    @keyframes shimmer {
+        0% { transform: translateX(-100%); }
+        20% { transform: translateX(100%); }
+        100% { transform: translateX(100%); }
+    }
+
+    @media (max-width: 768px) {
+        h1 { letter-spacing: 0.1em; }
+        .sub-text { letter-spacing: 0.2em; }
+    }
+</style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+<div class="overlay"></div>
+
+<div class="container" id="slide-container">
+    <!-- Slide 1 -->
+    <section class="slide active">
+        <span class="sub-text">Welcome to</span>
+        <h1>ADIEU 26</h1>
+        <div class="glimmer"></div>
+    </section>
+
+    <!-- Slide 2 -->
+    <section class="slide">
+        <span class="sub-text">The Grand Venue</span>
+        <span class="accent-text">GNMS Premises</span>
+    </section>
+
+    <!-- Slide 3 -->
+    <section class="slide">
+        <span class="sub-text">Save the Date</span>
+        <h1 style="font-size: clamp(1.8rem, 5vw, 4rem);">30th January 2026</h1>
+        <span class="sub-text neon-purple">From 3:00 PM Onwards</span>
+    </section>
+
+    <!-- Slide 4 -->
+    <section class="slide">
+        <span class="sub-text">A Night to Remember</span>
+        <h1 style="font-size: clamp(2rem, 6vw, 4.5rem);">We will be waiting for you</h1>
+    </section>
+</div>
+
+<div class="hint">Click or Scroll to proceed</div>
+
+<div class="navigation" id="nav-dots">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+</div>
+
+<script>
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    const particleCount = 120;
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+        constructor() {
+            this.init();
+        }
+
+        init() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2 + 0.5;
+            this.speedX = Math.random() * 0.5 - 0.25;
+            this.speedY = Math.random() * 0.5 - 0.25;
+            this.color = Math.random() > 0.5 ? '#d4af37' : '#ffffff';
+            this.opacity = Math.random() * 0.5 + 0.1;
+            this.flashSpeed = Math.random() * 0.02 + 0.005;
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.globalAlpha = this.opacity;
+            ctx.fill();
+            
+            this.opacity += this.flashSpeed;
+            if (this.opacity > 0.7 || this.opacity < 0.1) {
+                this.flashSpeed *= -1;
+            }
+        }
+
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+
+            if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+        }
+    }
+
+    function createParticles() {
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        requestAnimationFrame(animateParticles);
+    }
+
+    createParticles();
+    animateParticles();
+
+    // Slide Logic
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    let currentSlide = 0;
+    let isTransitioning = false;
+
+    function showSlide(index) {
+        if (isTransitioning) return;
+        isTransitioning = true;
+
+        const prevIndex = currentSlide;
+        
+        slides[prevIndex].classList.remove('active');
+        slides[prevIndex].classList.add('prev');
+        
+        currentSlide = (index + slides.length) % slides.length;
+        
+        slides[currentSlide].classList.remove('prev');
+        slides[currentSlide].classList.add('active');
+
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentSlide);
+        });
+
+        setTimeout(() => {
+            slides.forEach((s, i) => {
+                if (i !== currentSlide) s.classList.remove('prev');
+            });
+            isTransitioning = false;
+        }, 1200);
+    }
+
+    function nextSlide() {
+        showSlide(currentSlide + 1);
+    }
+
+    // Event Listeners
+    window.addEventListener('click', nextSlide);
+
+    window.addEventListener('wheel', (e) => {
+        if (Math.abs(e.deltaY) > 50) {
+            nextSlide();
+        }
+    }, { passive: true });
+
+    // Touch support
+    let touchStartY = 0;
+    window.addEventListener('touchstart', e => {
+        touchStartY = e.touches[0].clientY;
+    });
+    window.addEventListener('touchend', e => {
+        let touchEndY = e.changedTouches[0].clientY;
+        if (Math.abs(touchStartY - touchEndY) > 50) {
+            nextSlide();
+        }
+    });
+
+    // Auto play
+    let slideTimer = setInterval(nextSlide, 6000);
+
+    // Reset timer on interaction
+    function resetTimer() {
+        clearInterval(slideTimer);
+        slideTimer = setInterval(nextSlide, 6000);
+    }
+    window.addEventListener('click', resetTimer);
+</script>
+</body>
+</html>
